@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
+import { KakaoIntentId } from './constant/kakao.constant';
+import { KakaoController, KakaoIntent } from './decorator/kakao.decorator';
+import { KakaoReply, KakaoReplyMaker } from './kakao/kakao.type';
 
-@Controller()
+@KakaoController()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @KakaoIntent(KakaoIntentId.FALLBACK)
+  getHello(): KakaoReply {
+    return new KakaoReplyMaker().addSimpleText('안녕하세요!').makeReply();
   }
 }
