@@ -1,0 +1,5 @@
+node_modules
+dist
+build.sh
+cloudbuild.yaml
+docker-compose.yaml

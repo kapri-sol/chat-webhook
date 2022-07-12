@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', 
+  '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/default/${_APP}:${_TIMESTAMP}' ,
+  '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/default/${_APP}:latest' ,
+  '.']
+
+images: [
+  'us-central1-docker.pkg.dev/$PROJECT_ID/default/${_APP}:${_TIMESTAMP}',
+  'us-central1-docker.pkg.dev/$PROJECT_ID/default/${_APP}:latest'
+]
