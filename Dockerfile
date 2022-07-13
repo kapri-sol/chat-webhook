@@ -17,4 +17,4 @@ COPY --from=builder /app ./
 
 RUN npm i -g pm2
 
-CMD ["pm2-runtime", "dist/main.js"]
+CMD ["pm2-runtime", "npm run start:prod"]
