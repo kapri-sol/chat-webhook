@@ -14,7 +14,7 @@ body에 있는 intentId로 url을 변경해서 새로운 경로로 라우팅해�
 
 KakaoController라는 새로운 controller를 생성해서 intentId에 따른 요청을 처리한다.
 
-## 배포
+## 배포 방식
 
 테스트를 위해서 간단하게 약식으로 만들었다.
 
@@ -22,19 +22,19 @@ google cloud platform을 활용해서 docker 이미지를 생성하고 저장한
 
 ### 빌드
 
-docker 이미지는 cloudbuild를 사용한다.
+docker 이미지는 goolge cloud platform의 cloudbuild를 사용한다.
 
     ./build
 
 ### 배포
 
-#### docker image pull
+#### 이미지 다운로드
 
 docker pull을 이용해서 google cloud storage에 저장된 docker image를 다운받는다.
 
     docker pull us-central1-docker.pkg.dev/automatic-opus-355008/default/chat-webhook:latest
 
-#### docker compose
+#### 서버 실행
 
 docker compose를 이용해서 서버를 실행한다.
 
@@ -44,7 +44,7 @@ docker compose를 이용해서 서버를 종료한다.
 
     docker-compose down
 
-#### remove docker image
+#### 이미지 제거
 
 새로운 이미지를 이용해서 배포하려면 기존에 저장된 이미지를 제거해야한다.
 
