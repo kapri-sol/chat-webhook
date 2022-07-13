@@ -1,2 +1,3 @@
 # chat-webhook
-nestjs chat webhook template
+
+kakao 같은 챗봇의 웹훅에서는 http post 요청으로 body에 모든 정보를 다 담아서 전달해준다. 일반적으로 mvc 패턴의 controller에서는 경로를 기준으로 요청을 나누어 구성하지만, 챗봇의 웹훅에서는 요청 경로도 요청 함수도 한정되기 떄문에 요청을 나누기 힘들다. 따라서 nest.js를 활용해서 챗봇 요청을 나누는 템플릿을 만들게 되었다.
