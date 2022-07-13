@@ -6,6 +6,7 @@ import { KakaoMiddleware } from './middleware/kakao.middleware';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './entity/user.entity';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: process.env.DB_PASSWORD,
       synchronize: process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV !== 'production',
+      entities: [User],
     }),
   ],
   controllers: [AppController],
