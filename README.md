@@ -4,15 +4,9 @@ kakao 같은 챗봇의 웹훅에서는 http post 요청으로 body에 모든 정
 
 ## 목차
 
-[템플릿 구조](#템플릿-구조)
-
-- [middleware](#middleware)
-- [controller](#controller)
-
-[배포방식](#배포-방식)
-
 - [chat-webhook](#chat-webhook)
   - [목차](#목차)
+  - [챗봇 링크](#챗봇-링크)
   - [템플릿 구조](#템플릿-구조)
     - [middleware](#middleware)
     - [controller](#controller)
@@ -22,6 +16,11 @@ kakao 같은 챗봇의 웹훅에서는 http post 요청으로 body에 모든 정
       - [이미지 다운로드](#이미지-다운로드)
       - [서버 실행](#서버-실행)
       - [이미지 제거](#이미지-제거)
+
+## 챗봇 링크
+
+- [카카오 채널](https://pf.kakao.com/_QVdcxb)
+- [채팅](https://pf.kakao.com/_QVdcxb/chat)
 
 ## 템플릿 구조
 
