@@ -14,6 +14,12 @@ export class User {
 
   @Column({
     nullable: true,
+    default: null,
+  })
+  email: string;
+
+  @Column({
+    nullable: true,
   })
   route: KakaoFallbackRoute;
 
