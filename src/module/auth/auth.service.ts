@@ -4,6 +4,7 @@ import { AUTH_NUMBER_CACHE_KEY, AUTH_NUMBER_EXPIRE_TIME, AUTH_NUMBER_LENGTH } fr
 import * as sgMail from '@sendgrid/mail';
 import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
+import { AuthDataDto } from './dto/auth.dto';
 import { UserService } from '../user/user.service';
 
 @Injectable()
@@ -21,14 +22,21 @@ export class AuthService {
     return crypto.randomInt(maxNumber).toString();
   }
 
-  setAuthNumber(userUid: bigint, authNumber: string) {
-    return this.cacheManager.set(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`, authNumber, {
+  setAuthData(userUid: bigint, email: string, authNumber: string) {
+    const authData = JSON.stringify({
+      email,
+      authNumber,
+    });
+
+    return this.cacheManager.set(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`, authData, {
       ttl: AUTH_NUMBER_EXPIRE_TIME,
     });
   }
 
-  getAuthNumber(userUid: bigint): Promise<string> {
-    return this.cacheManager.get(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`);
+  getAuthData(userUid: bigint): Promise<AuthDataDto> {
+    return this.cacheManager
+      .get(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`)
+      .then((authData: string) => JSON.parse(authData));
   }
 
   async sendMail(userUid: bigint, emailAddress: string) {
@@ -45,11 +53,27 @@ export class AuthService {
       .then(console.log)
       .catch(console.error);
 
-    await this.setAuthNumber(userUid, authNumber).then(console.log);
+    await this.setAuthData(userUid, emailAddress, authNumber).then(console.log);
   }
 
   async validateAuthNumber(userUid: bigint, authNumberToValidate: string): Promise<boolean> {
-    const savedAuthNumber = await this.getAuthNumber(userUid);
-    return savedAuthNumber === authNumberToValidate.toString();
+    const authData = await this.getAuthData(userUid);
+
+    if (!authData) {
+      await this.userService.initRoute(userUid);
+      throw new UnauthorizedException();
+    }
+
+    const { email, authNumber } = authData;
+
+    const isValid = authNumber === authNumberToValidate.toString();
+
+    if (!isValid) {
+      return false;
+    }
+
+    await this.userService.completAuth(userUid, email);
+
+    return true;
   }
 }
