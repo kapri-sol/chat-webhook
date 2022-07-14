@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { KakaoFallbackRoute } from 'src/constant/kakao.constant';
 import { User } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
+
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
@@ -17,4 +19,14 @@ export class UserService {
     );
   }
 
+  async initRoute(userUid: bigint): Promise<void> {
+    await this.userRepository.update(
+      {
+        userUid,
+      },
+      {
+        route: null,
+      },
+    );
+  }
 }
