@@ -10,6 +10,8 @@ kakao 같은 챗봇의 웹훅에서는 http post 요청으로 body에 모든 정
   - [템플릿 구조](#템플릿-구조)
     - [middleware](#middleware)
     - [controller](#controller)
+    - [filter](#filter)
+    - [guard](#guard)
   - [배포 방식](#배포-방식)
     - [빌드](#빌드)
     - [배포](#배포)
@@ -33,6 +35,14 @@ body에 있는 intentId로 url을 변경해서 새로운 경로로 라우팅해�
 ### controller
 
 KakaoController라는 새로운 controller를 생성해서 intentId에 따른 요청을 처리한다.
+
+### filter
+
+챗봇은 에러가 발생했다고 응답의 status를 성공이 아닌 다른 것으로 돌려주면 정상적인 답변이 나가지 않게된다. 에러가 발생했을 때, status는 성공이지만 사용자가 에러가 발생했다고 확인할 수 있게 filter를 이용해서 에러마다 다른 답변을 나가게 구현했다.
+
+### guard
+
+인증이 필요한 챗봇을 생성해야 할 때가 있다. 인증로직을 다른 서비스 로직과 같이 구현하기보다는, nest.js에서 제공하는 guard를 이용하면 알아보기 쉽고 구조적으로 안정적이라 생각해서 guard로 구현했다.
 
 ## 배포 방식
 
