@@ -1,11 +1,5 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { KakaoFallbackRoute } from 'src/constant/kakao.constant';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -21,7 +15,7 @@ export class User {
   @Column({
     nullable: true,
   })
-  route: string;
+  route: KakaoFallbackRoute;
 
   @CreateDateColumn()
   createdAt: Date;
