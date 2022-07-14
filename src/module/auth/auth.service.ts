@@ -18,4 +18,14 @@ export class AuthService {
     const maxNumber = parseInt('9'.repeat(AUTH_NUMBER_LENGTH));
     return crypto.randomInt(maxNumber).toString();
   }
+
+  setAuthNumber(userUid: bigint, authNumber: string) {
+    return this.cacheManager.set(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`, authNumber, {
+      ttl: AUTH_NUMBER_EXPIRE_TIME,
+    });
+  }
+
+  getAuthNumber(userUid: bigint): Promise<string> {
+    return this.cacheManager.get(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`);
+  }
 }
