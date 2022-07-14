@@ -16,4 +16,21 @@ export class AuthController {
     return new KakaoReplyMaker().addSimpleText('이메일 주소를 입력해주세요!').makeReply();
   }
 
+  @KakaoIntent(KakaoFallbackRoute.SEND_AUTH_MAIL)
+  async sendMail(@LocalData() localData: LocalDataInfo) {
+    const {
+      utterance: emailAddress,
+      user: { userUid },
+    } = localData;
+
+    try {
+      await this.authService.sendMail(userUid, emailAddress);
+      await this.userServicie.setRoute(userUid, KakaoFallbackRoute.VALIDATE_AUTH_NUM);
+    } catch (err) {
+      console.error(err);
+    }
+
+    return new KakaoReplyMaker().addSimpleText('인증숫자를 입력해주세요!').makeReply();
+  }
+
 }
