@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entity/user.entity';
+import { AuthModule } from './module/auth/auth.module';
+import { UserModule } from './module/user/user.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { User } from './entity/user.entity';
       entities: [User],
     }),
     TypeOrmModule.forFeature([User]),
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
