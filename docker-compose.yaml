@@ -6,6 +6,15 @@ services:
       - 80:3000
     depends_on:
       - databse
+      - memory-store
+    networks:
+      - default-net
+  memory-store:
+    image: redis:alpine
+    command: redis-server --port 6379
+    container_name: local_memory_store
+    ports:
+      - 6379:6379
     networks:
       - default-net
   databse:
