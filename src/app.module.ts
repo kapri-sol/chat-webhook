@@ -33,6 +33,7 @@ import { User } from './entity/user.entity';
       logging: process.env.NODE_ENV !== 'production',
       entities: [User],
     }),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [AppController],
   providers: [AppService],
