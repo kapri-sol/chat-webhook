@@ -29,4 +29,16 @@ export class UserService {
       },
     );
   }
+
+  async completAuth(userUid: bigint, email: string) {
+    await this.userRepository.update(
+      {
+        userUid,
+      },
+      {
+        email,
+        route: null,
+      },
+    );
+  }
 }
