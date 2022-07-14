@@ -1,15 +1,17 @@
-import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { AUTH_NUMBER_CACHE_KEY, AUTH_NUMBER_EXPIRE_TIME, AUTH_NUMBER_LENGTH } from 'src/constant/auth.constant';
 import * as sgMail from '@sendgrid/mail';
 import { ConfigService } from '@nestjs/config';
 import { Cache } from 'cache-manager';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    private readonly userService: UserService,
   ) {
     sgMail.setApiKey(this.configService.get<string>('MAIL_API_KEY'));
   }
