@@ -1,6 +1,8 @@
+import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { KakaoFallbackRoute, KakaoIntentId } from 'src/constant/kakao.constant';
 import { LocalData, LocalDataInfo } from 'src/decorator/kakao-user.decorator';
 import { KakaoController, KakaoIntent } from 'src/decorator/kakao.decorator';
+import { AuthGuard } from 'src/guard/auth.guard';
 import { KakaoReply, KakaoReplyMaker } from 'src/kakao/kakao.type';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
@@ -41,9 +43,9 @@ export class AuthController {
     } = localData;
 
     try {
-    const isValid = await this.authService.validateAuthNumber(userUid, authNumber);
+      const isValid = await this.authService.validateAuthNumber(userUid, authNumber);
 
-    if (isValid) {
+      if (isValid) {
         return new KakaoReplyMaker()
           .addBasicCard({
             description: '인증되었습니다!',
@@ -56,7 +58,7 @@ export class AuthController {
             ],
           })
           .makeReply();
-    } else {
+      } else {
         return new KakaoReplyMaker().addSimpleText('인증이 실패했습니다.\n다시 입력해주세요.').makeReply();
       }
     } catch (err) {
@@ -81,6 +83,22 @@ export class AuthController {
       }
       throw err;
     }
-    }
+  }
+
+  @UseGuards(AuthGuard)
+  @KakaoIntent(KakaoIntentId.CHECK_AUTH)
+  checkAuthData(@LocalData() localData: LocalDataInfo) {
+    const {
+      user: { email },
+    } = localData;
+
+    return new KakaoReplyMaker()
+      .addSimpleText(`${email} 메일로 인증되었습니다!`)
+      .addQuickReply({
+        action: 'block',
+        label: '처음으로',
+        blockId: KakaoIntentId.WELCOME,
+      })
+      .makeReply();
   }
 }
