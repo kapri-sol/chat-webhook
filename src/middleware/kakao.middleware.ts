@@ -6,9 +6,7 @@ import { KakaoDTO } from 'src/kakao/kakao.dto';
 import { Repository } from 'typeorm';
 
 export class KakaoMiddleware implements NestMiddleware {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-  ) {}
+  constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
     const kakao: KakaoDTO = req.body;
@@ -33,7 +31,7 @@ export class KakaoMiddleware implements NestMiddleware {
     }
 
     // 경로 라우팅
-    req.url = `/kakao/${kakao.intent.id}`;
+    req.url = `/kakao/${user.route || kakao.intent.id}`;
 
     res.locals = {
       id: kakao.userRequest.user.id,
