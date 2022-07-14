@@ -33,4 +33,21 @@ export class AuthController {
     return new KakaoReplyMaker().addSimpleText('인증숫자를 입력해주세요!').makeReply();
   }
 
+  @KakaoIntent(KakaoFallbackRoute.VALIDATE_AUTH_NUM)
+  async validateAuthNum(@LocalData() localData: LocalDataInfo): Promise<KakaoReply> {
+    const {
+      utterance: authNumber,
+      user: { userUid },
+    } = localData;
+
+    const isValid = await this.authService.validateAuthNumber(userUid, authNumber);
+
+    await this.userServicie.initRoute(userUid);
+
+    if (isValid) {
+      return new KakaoReplyMaker().addSimpleText('인증되었습니다.').makeReply();
+    } else {
+      return new KakaoReplyMaker().addSimpleText('인증에 실패했습니다.').makeReply();
+    }
+  }
 }
