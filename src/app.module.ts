@@ -24,6 +24,8 @@ import * as redisStore from 'cache-manager-redis-store';
         DB_NAME: Joi.string().required(),
         DB_USERNAME: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
+        MAIL_API_KEY: Joi.string().required(),
+        REDIS_URL: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRoot({
