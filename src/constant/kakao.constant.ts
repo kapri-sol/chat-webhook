@@ -4,4 +4,8 @@ export enum KakaoIntentId {
 
   START_AUTH = '62ce6c03903c8b5a80049eec',
 }
+
+export enum KakaoFallbackRoute {
+  SEND_AUTH_MAIL = 'SEND_AUTH_MAIL',
+  VALIDATE_AUTH_NUM = 'VALIDATE_AUTH_NUM',
 }
