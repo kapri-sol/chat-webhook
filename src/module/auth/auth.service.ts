@@ -45,4 +45,9 @@ export class AuthService {
 
     await this.setAuthNumber(userUid, authNumber).then(console.log);
   }
+
+  async validateAuthNumber(userUid: bigint, authNumberToValidate: string): Promise<boolean> {
+    const savedAuthNumber = await this.getAuthNumber(userUid);
+    return savedAuthNumber === authNumberToValidate.toString();
+  }
 }
