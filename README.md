@@ -19,10 +19,14 @@ kakao 같은 챗봇의 웹훅에서는 http post 요청으로 body에 모든 정
       - [서버 실행](#서버-실행)
       - [이미지 제거](#이미지-제거)
 
+---
+
 ## 챗봇 링크
 
 - [카카오 채널](https://pf.kakao.com/_QVdcxb)
 - [채팅](https://pf.kakao.com/_QVdcxb/chat)
+
+---
 
 ## 템플릿 구조
 
@@ -43,6 +47,8 @@ KakaoController라는 새로운 controller를 생성해서 intentId에 따른 �
 ### guard
 
 인증이 필요한 챗봇을 생성해야 할 때가 있다. 인증로직을 다른 서비스 로직과 같이 구현하기보다는, nest.js에서 제공하는 guard를 이용하면 알아보기 쉽고 구조적으로 안정적이라 생각해서 guard로 구현했다.
+
+---
 
 ## 배포 방식
 
