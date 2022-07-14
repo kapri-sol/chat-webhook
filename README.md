@@ -30,7 +30,7 @@ kakao 같은 챗봇의 웹훅에서는 http post 요청으로 body에 모든 정
 
 ## 템플릿 구조
 
-카카오에서 post로 body에 block 정보를 보내준다. block에 따라서 요청들을 라우팅 한다.
+카카오에서 post로 body에 block 정보를 보내준다. block에 따라서 요청들을 라우팅 한다. filter로 챗봇에 맞게 에러 발생 상황을 알려준다. 인증이 필요한 챗봇의 경우에는 guard로 인증을 구현한다.
 
 ### middleware
 
