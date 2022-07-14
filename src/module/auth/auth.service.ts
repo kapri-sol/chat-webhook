@@ -28,4 +28,21 @@ export class AuthService {
   getAuthNumber(userUid: bigint): Promise<string> {
     return this.cacheManager.get(`${AUTH_NUMBER_CACHE_KEY}:${userUid.toString()}`);
   }
+
+  async sendMail(userUid: bigint, emailAddress: string) {
+    const authNumber = this.generateAuthNumber();
+
+    await sgMail
+      .send({
+        to: emailAddress,
+        from: 'tothelunar92@gmail.com',
+        replyTo: 'tothelunar92@gmail.com',
+        subject: '인증메일',
+        text: `인증숫자: ${authNumber}`,
+      })
+      .then(console.log)
+      .catch(console.error);
+
+    await this.setAuthNumber(userUid, authNumber).then(console.log);
+  }
 }
