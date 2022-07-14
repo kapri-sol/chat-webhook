@@ -6,4 +6,15 @@ import { Repository } from 'typeorm';
 export class UserService {
   constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) {}
 
+  async setRoute(userUid: bigint, route: KakaoFallbackRoute): Promise<void> {
+    await this.userRepository.update(
+      {
+        userUid,
+      },
+      {
+        route,
+      },
+    );
+  }
+
 }
